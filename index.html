@@ -53,6 +53,17 @@
       <section class="board-wrap" aria-label="オセロ盤">
         <div id="board" class="board" role="grid" aria-label="8かける8のオセロ盤"></div>
       </section>
+
+      <div id="result-popup" class="result-popup" aria-live="polite" aria-hidden="true">
+        <div class="result-card">
+          <div id="result-character" class="result-character" aria-hidden="true"></div>
+          <p id="result-text" class="result-text"></p>
+          <div class="result-actions">
+            <button id="result-restart" class="result-button result-restart" type="button">もういちど</button>
+            <button id="result-close" class="result-button result-close" type="button">おわり</button>
+          </div>
+        </div>
+      </div>
     </main>
 
     <script src="script.js"></script>

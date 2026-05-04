@@ -31,6 +31,11 @@ const lightScore = document.querySelector("#light-score");
 const message = document.querySelector("#message");
 const resetButton = document.querySelector("#reset-button");
 const guideModeSelect = document.querySelector("#guide-mode");
+const resultPopup = document.querySelector("#result-popup");
+const resultCharacter = document.querySelector("#result-character");
+const resultText = document.querySelector("#result-text");
+const resultRestart = document.querySelector("#result-restart");
+const resultClose = document.querySelector("#result-close");
 
 let board = [];
 let currentPlayer = DARK;
@@ -52,6 +57,7 @@ function createBoard() {
   flippingKeys = new Set();
   isAnimating = false;
   guideMoveIndex = 0;
+  hideResultPopup();
   render();
 }
 
@@ -247,6 +253,34 @@ function renderPiece(value, isFlipping = false) {
   `;
 }
 
+function renderResultCharacter(winner) {
+  if (winner === EMPTY) {
+    return `
+      <span class="result-pair">
+        ${renderPiece(DARK)}
+        ${renderPiece(LIGHT)}
+      </span>
+    `;
+  }
+
+  return renderPiece(winner);
+}
+
+function showResultPopup(winner) {
+  const isDraw = winner === EMPTY;
+  const resultMessage = isDraw ? "\u3072\u304d\u308f\u3051\uff01" : `${playerName(winner)}${TEXT.win}`;
+
+  resultCharacter.innerHTML = renderResultCharacter(winner);
+  resultText.textContent = resultMessage;
+  resultPopup.classList.add("show");
+  resultPopup.setAttribute("aria-hidden", "false");
+}
+
+function hideResultPopup() {
+  resultPopup.classList.remove("show");
+  resultPopup.setAttribute("aria-hidden", "true");
+}
+
 function render() {
   const validMoves = getValidMoves(currentPlayer);
   const validMoveKeys = new Set(validMoves.map((move) => `${move.row}-${move.col}`));
@@ -288,9 +322,11 @@ function render() {
   if (gameOver) {
     if (scores.dark === scores.light) {
       message.textContent = TEXT.draw;
+      showResultPopup(EMPTY);
     } else {
       const winner = scores.dark > scores.light ? DARK : LIGHT;
       message.textContent = `${TEXT.end}${playerName(winner)}${TEXT.win}`;
+      showResultPopup(winner);
     }
   } else if (message.textContent.includes(TEXT.pass)) {
     setTimeout(() => {
@@ -357,6 +393,8 @@ function stopGuideCycle() {
 }
 
 resetButton.addEventListener("click", createBoard);
+resultRestart.addEventListener("click", createBoard);
+resultClose.addEventListener("click", hideResultPopup);
 guideModeSelect.addEventListener("change", () => {
   guideMoveIndex = 0;
   render();
