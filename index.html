@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ふわふわオセロ</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app" aria-labelledby="game-title">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Sweet Othello</p>
+          <h1 id="game-title">ふわふわオセロ</h1>
+        </div>
+        <button id="reset-button" class="reset-button" type="button" aria-label="ゲームをはじめから">
+          <span aria-hidden="true">↻</span>
+          もういちど
+        </button>
+      </section>
+
+      <section class="guide-control" aria-label="ガイド表示">
+        <label for="guide-mode">ガイド</label>
+        <select id="guide-mode">
+          <option value="full">まるとライン</option>
+          <option value="dots">まるだけ</option>
+          <option value="off">なし</option>
+        </select>
+      </section>
+
+      <section class="status-panel" aria-live="polite">
+        <div class="turn-card">
+          <span class="label">いまのばん</span>
+          <span id="turn-label" class="turn-label">
+            <span class="piece-preview dark"></span>
+            くろ
+          </span>
+        </div>
+        <div class="score-card">
+          <span class="piece-preview dark"></span>
+          <span>くろ</span>
+          <strong id="dark-score">2</strong>
+        </div>
+        <div class="score-card">
+          <span class="piece-preview light"></span>
+          <span>しろ</span>
+          <strong id="light-score">2</strong>
+        </div>
+      </section>
+
+      <p id="message" class="message">おけるところが、きらきら光るよ。</p>
+
+      <section class="board-wrap" aria-label="オセロ盤">
+        <div id="board" class="board" role="grid" aria-label="8かける8のオセロ盤"></div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
